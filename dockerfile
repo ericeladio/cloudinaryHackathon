@@ -10,4 +10,4 @@ RUN npm run build
 ENV HOST=0.0.0.0
 ENV PORT=4321
 EXPOSE 4321
-CMD node ./dist/server/entry.mjs
+CMD ["sh", "-c", "echo PUBLIC_CLOUDINARY_CLOUD_NAME=$PUBLIC_CLOUDINARY_CLOUD_NAME && node ./dist/server/entry.mjs"]
