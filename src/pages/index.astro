@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import DradAndDrop from "../components/DradAndDrop.astro";
 import DradAndDrop2 from "../components/DradAndDrop2.astro";
 
-const videoSrc = "contract.mp4";
+const videoSrc = "https://res.cloudinary.com/drjuowzv7/video/upload/v1729633410/contract_ececra.mp4";
 const realGif = "doll.webp";
 const virusGif = "virus.gif";
 ---
@@ -12,7 +12,11 @@ const virusGif = "virus.gif";
 	<main>
 		<link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 		<audio id="soundtrack" src="soundtrack.ogg" preload="auto" loop> </audio>
-		<div class="form" id="form">
+		<div>
+			<span id='text-sound' class="text-sound">Para una mejor experiencia activa el sonido</span>
+			<span id='sound-btn' class="sound-btn">Activar sonido</span>
+		</div>
+		<div class="form fomr-size" id="form">
 			<span class="form-title"> Nos vengaremos por ti. </span>
 			<input
 				id="input"
@@ -68,7 +72,7 @@ const virusGif = "virus.gif";
 				digital. Cr3iste qu3 3ste 3ra el corr30 d3l infi3rn0, vaya qu3
 				3res facil d3 3ngañar,¿t3 r3t0 a un du3l0? ... tú contra mí. Si
 				ganas, t3 lib3r0. P3r0 si pi3rdes... bu3n0, digam0s qu3 tu
-				exist3ncia s3rá... 3liminada
+				exist3ncia s3rá... 3liminada.
 			</p>
 			<button class="button" id="virus-btn">Pelear</button>
 		</div>
@@ -76,10 +80,12 @@ const virusGif = "virus.gif";
 </Layout>
 
 <script>
-	import { navigate } from "astro:transitions/client";
+import { navigate } from "astro:transitions/client";
 
 	const jumpScare = document.getElementById("jumpscare");
 	const soundTrack = document.getElementById("soundtrack");
+	const soundBtn = document.getElementById("sound-btn");
+	const textBtn = document.getElementById("text-sound");
 
 	const toggleStyle = (
 		hidenElement,
@@ -92,18 +98,31 @@ const virusGif = "virus.gif";
 		toHiden.classList.replace(hidenClass, "hiden");
 		toDisplay.classList.replace("hiden", displayClass);
 	};
-	(()=>{
-		soundTrack.play()
-	})();
+	// (()=>{
+	// 	soundTrack.play()
+	// })();
+
+	document.getElementById("sound-btn").addEventListener("click", () => {
+		textBtn.classList.toggle("notext");
+		console.log(soundBtn.textContent)
+		if(soundBtn.textContent==="Activar sonido"){
+			soundBtn.textContent="De sactivar sonido"
+			soundTrack.play()
+		} else{
+			soundBtn.textContent="Activar sonido"
+			soundTrack.pause()
+		}
+		
+	});
 
 	document.getElementById("form-button").addEventListener("click", () => {
 		const inputName = document.getElementById("input").value;
 		localStorage.setItem("victimName", inputName);
 		toggleStyle("form", "form", "victim", "drag-drog");
+
 	});
 
 	document.addEventListener("DOMContentLoaded", () => {
-		console.log("LOADED");
 		const video = document.getElementById("video");
 		if (video) {
 
@@ -150,6 +169,7 @@ const virusGif = "virus.gif";
 		width: 100%;
 		height: 100vh;
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		color: azure;
@@ -160,6 +180,9 @@ const virusGif = "virus.gif";
 		align-items: center;
 		height: 100%;
 		justify-content: space-evenly;
+	}
+	.fomr-size{
+		height: 65%;
 	}
 	.form-title {
 		color: azure;
@@ -173,6 +196,7 @@ const virusGif = "virus.gif";
 	.form-button {
 		width: 100px;
 		font-family: fantasy;
+		cursor: pointer;
 	}
 	.hiden {
 		display: none;
@@ -195,9 +219,30 @@ const virusGif = "virus.gif";
 		color: azure;
 		font-family: fantasy;
 		font-size: 20px;
+		cursor: pointer;
 	}
 	.title-ribbon {
 		font-size: 25px;
+	}
+	.text-sound{
+		color: aliceblue;
+		font-size: 10px;
+		font-weight: bold;
+	}
+	.sound-btn{
+		cursor: pointer;
+		color: aliceblue;
+		font-size: 10px;
+		font-weight: bold;
+		text-shadow: 
+                0 0 5px #ffcc00, 
+                0 0 10px #ffcc00, 
+                0 0 15px #ff6600, 
+                0 0 20px #ff6600, 
+                0 0 25px #ff3300; 
+	}
+	.notext{
+		opacity: 0;
 	}
 	p {
 		font-family: 'Orbitron', sans-serif;
