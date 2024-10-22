@@ -1,0 +1,9 @@
+version : "3"
+
+services:
+  Astro:
+    image: image-web-astro
+    build: ./
+    container_name: web-Astro
+    ports:
+      - 4321:4321

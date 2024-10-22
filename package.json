@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "web-page",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -10,6 +10,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^4.16.5"
+    "@astrojs/node": "^8.3.4",
+    "astro": "^4.16.5",
+    "astro-cloudinary": "^1.1.2",
+    "dotenv": "^16.4.5"
   }
 }

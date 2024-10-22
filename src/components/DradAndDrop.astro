@@ -1,0 +1,101 @@
+---
+import { CldUploadWidget } from "astro-cloudinary";
+const PRESET = import.meta.env.UPLOADPRESET;
+
+interface Props {
+	buttonLabel: string;
+	toggleStyle: {
+		hidenElement: string;
+		removeClass: string;
+		displayElement: string;
+		addClass: string;
+	};
+}
+
+const { buttonLabel, toggleStyle } = Astro.props;
+const toggleStyleString = JSON.stringify(toggleStyle);
+---
+
+<astro-test id="test" data-toggle-style={toggleStyleString}>
+	<CldUploadWidget
+		id="upload-widget"
+		uploadPreset={PRESET}
+		options={{
+			sources: ["local"],
+			multiple: false,
+			maxFiles: 1,
+			styles: {
+				palette: {
+					window: "#000000", // Fondo del widget
+					sourceBg: "#000000", // Fondo del área de carga
+					windowBorder: "#660000", // Bordes del widget
+					tabIcon: "#ffffff", // Iconos
+					inactiveTabIcon: "#666666", // Iconos de pestañas inactivos
+					menuIcons: "#ffffff", // Iconos del menú
+					link: "#ff6666", // Enlaces
+					action: "#ff0000", // Color de botones de acción (subir)
+					inProgress: "#ff6666", // Progreso de la carga
+					complete: "#00ff00", // Color de barra completa
+					error: "#ff0000", // Color de error
+					textDark: "#ffffff", // Texto en modo oscuro
+					textLight: "#ff6666", // Texto en modo claro
+				},
+				fonts: {
+					default: null, // Mantiene la fuente por defecto
+					"'Creepster', cursive":
+						"https://fonts.googleapis.com/css2?family=Creepster&display=swap", // Fuente "creepy" para Halloween
+				},
+				// Manchas de sangre en el fondo usando un overlay
+
+				// Opcional: puedes personalizar el botón de cargar
+				button: {
+					backgroundColor: "#440000",
+					color: "#ffffff",
+					borderRadius: "5px",
+					border: "2px solid #660000",
+					padding: "10px 20px",
+					fontFamily: "'Creepster', cursive",
+				},
+			},
+		}}
+		}}
+	>
+		<button class="button">{buttonLabel}</button>
+	</CldUploadWidget>
+</astro-test>
+
+<script>
+	import { getCldImageUrl } from "astro-cloudinary/helpers";
+	const testElement = document.getElementById("test");
+	const temporal = JSON.parse(testElement.dataset.toggleStyle);
+	const widget = document.getElementById("upload-widget");
+	if (widget) {
+		widget.addEventListener("clduploadwidget:success", ((
+			e: CustomEvent<{ info: { public_id: string } }>,
+		) => {
+			const toHiden = document.getElementById(temporal["hidenElement"]);
+			toHiden.classList.replace(temporal["removeClass"], "hiden");
+			const toShow = document.getElementById(temporal["displayElement"]);
+			toShow.classList.replace("hiden", temporal["addClass"]);
+
+			const publicId = e.detail.info.public_id;
+			const url = getCldImageUrl({
+				src: publicId,
+				replaceBackground: "go to the hell",
+			});
+			localStorage.setItem("victim", `${url}`);
+		}) as EventListener);
+	}
+</script>
+
+<style>
+	.button {
+		width: 200px;
+		height: 50px;
+		border-radius: 5%;
+		background-color: blueviolet;
+		color: azure;
+		font-family: fantasy;
+		font-size: 20px;
+	}
+</style>
