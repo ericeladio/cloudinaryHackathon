@@ -1,42 +1,51 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import DradAndDrop from '../components/DradAndDrop.astro';
-import DradAndDrop2 from '../components/DradAndDrop2.astro';
+import Layout from "../layouts/Layout.astro";
+import DradAndDrop from "../components/DradAndDrop.astro";
+import DradAndDrop2 from "../components/DradAndDrop2.astro";
 
-
-const videoSrc = "contract.mp4"; 
-const realGif ="doll.webp"
-const virusGif = "virus.gif"
-
+const videoSrc = "contract.mp4";
+const realGif = "doll.webp";
+const virusGif = "virus.gif";
 ---
+
 <Layout title="🔥 Correo del infierno. 🔥">
-	<main >
+	<main>
+		<link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+		<audio id="soundtrack" src="soundtrack.ogg" preload="auto" loop> </audio>
 		<div class="form" id="form">
-			<span class="form-title">
-				Nos vengaremos por ti.
-			</span>
-			<input id="input" class="form-input" placeholder="Nombre de la persona que deseas matar."/>
+			<span class="form-title"> Nos vengaremos por ti. </span>
+			<input
+				id="input"
+				class="form-input"
+				placeholder="Nombre de la persona que deseas matar."
+			/>
 			<button class="form-button" id="form-button">Enviar</button>
 		</div>
 		<div class="hiden" id="victim">
 			<span class="form-title">
-				Por favor suba una imagen de la persona que se  quiere vengar.
+				Por favor, suba una imagen de la persona que se quiere vengar.
 			</span>
-			<DradAndDrop 
-				buttonLabel='Subir'
-				toggleStyle={ {hidenElement:'victim',removeClass:'drag-drog',displayElement:'user',addClass:'drag-drog'}}
-			>
-			</DradAndDrop>
+			<DradAndDrop
+				buttonLabel="Subir"
+				toggleStyle={{
+					hidenElement: "victim",
+					removeClass: "drag-drog",
+					displayElement: "user",
+					addClass: "drag-drog",
+				}}
+			/>
 		</div>
 		<div class="hiden" id="user">
-			<span class="form-title">
-				Por favor suba una imagen suya.
-			</span>
-			<DradAndDrop2 
-				buttonLabel='Subir'
-				toggleStyle={ {hidenElement:'user',removeClass:'drag-drog',displayElement:'container-video',addClass:'form'}}
-			>
-			</DradAndDrop2>
+			<span class="form-title"> Por favor, suba una imagen suya. </span>
+			<DradAndDrop2
+				buttonLabel="Subir"
+				toggleStyle={{
+					hidenElement: "user",
+					removeClass: "drag-drog",
+					displayElement: "container-video",
+					addClass: "form",
+				}}
+			/>
 		</div>
 		<div id="container-video" class="hiden">
 			<video id="video" width="100%" controls>
@@ -49,65 +58,90 @@ const virusGif = "virus.gif"
 			<span class="title-ribbon">¿Quieres desatar el hilo? </span>
 			<img id="gif" src={realGif} alt="GIF" width="500" />
 			<button class="button" id="gif-btn">Desatar</button>
-		</div> 
+		</div>
 		<div id="virus" class="hiden">
 			<img id="gif" src={virusGif} alt="GIF" width="500" />
-			<p>Finalm3nt3 has caíd0 3n mi trampa. S0y 3l virus, la plaga digital. S0y tan r3al c0m0 3l códig0 que s0stiene 3st3 mund0 digital. Cr3iste qu3 3st3 3ra el corr30 d3l infi3rn0, vaya qu3 3r3s facil d3 3ngañar,t3 r3t0 a un du3l0... tú contra mí. Si ganas, t3 lib3r0. P3r0 si pi3rd3s... bu3n0, digam0s qu3 tu 3xist3ncia s3rá... 3liminada</p>
+			<audio id="jumpscare" src="jumpscare.ogg" preload="auto"> </audio>
+			<p>
+				Finalm3nte has caíd0 3n mi trampa. S0y 3l virus, la plaga
+				digital. S0y tan r3al c0m0 3l códig0 que s0stiene 3ste mund0
+				digital. Cr3iste qu3 3ste 3ra el corr30 d3l infi3rn0, vaya qu3
+				3res facil d3 3ngañar,¿t3 r3t0 a un du3l0? ... tú contra mí. Si
+				ganas, t3 lib3r0. P3r0 si pi3rdes... bu3n0, digam0s qu3 tu
+				exist3ncia s3rá... 3liminada
+			</p>
 			<button class="button" id="virus-btn">Pelear</button>
-		</div>	
+		</div>
 	</main>
 </Layout>
 
 <script>
 	import { navigate } from "astro:transitions/client";
-	const toggleStyle = (hidenElement, hidenClass,displayElement, displayClass)=>{
+
+	const jumpScare = document.getElementById("jumpscare");
+	const soundTrack = document.getElementById("soundtrack");
+
+	const toggleStyle = (
+		hidenElement,
+		hidenClass,
+		displayElement,
+		displayClass,
+	) => {
 		const toHiden = document.getElementById(hidenElement);
-        const toDisplay = document.getElementById(displayElement);
-        toHiden.classList.replace(hidenClass,'hiden');
-        toDisplay.classList.replace('hiden',displayClass);
-	}
-	
-	 document.getElementById('form-button').addEventListener('click', () => {
-		const inputName = document.getElementById('input').value;
-    	localStorage.setItem('victimName', inputName);
-		toggleStyle('form','form','victim','drag-drog')
-      });
+		const toDisplay = document.getElementById(displayElement);
+		toHiden.classList.replace(hidenClass, "hiden");
+		toDisplay.classList.replace("hiden", displayClass);
+	};
+	(()=>{
+		soundTrack.play()
+	})();
 
-      window.addEventListener('DOMContentLoaded', () => {
-        console.log('LOADED')
-		const video = document.getElementById('video');
-        if (video) {
-			console.log("video")
-          video.addEventListener('ended', () => {
-            toggleStyle('container-video','form','ribbon','form')
-          });
-        }
-      });
+	document.getElementById("form-button").addEventListener("click", () => {
+		const inputName = document.getElementById("input").value;
+		localStorage.setItem("victimName", inputName);
+		toggleStyle("form", "form", "victim", "drag-drog");
+	});
 
-	  document.getElementById('video-btn').addEventListener('click', () => {
-		toggleStyle('container-video','form','ribbon','form')
-	  })
-		
+	document.addEventListener("DOMContentLoaded", () => {
+		console.log("LOADED");
+		const video = document.getElementById("video");
+		if (video) {
 
-	const placeholder ="doll.jpeg" 
-	window.addEventListener('DOMContentLoaded', () => {
-        const gifImage = document.getElementById('gif');
-        const playGifBtn = document.getElementById('gif-btn');
+			video.addEventListener("play", () => {
+				soundTrack.pause()
+			})
 
-        if (gifImage) {
-          playGifBtn.addEventListener('click', () => {
-            gifImage.src = `${placeholder}`;
-			setTimeout(()=>{toggleStyle('ribbon','form','virus','form')},4000)
-          });
-        }
-      });
+			video.addEventListener("ended", () => {
+				toggleStyle("container-video", "form", "ribbon", "form");
+				soundTrack.play()
+			});
+		}
+	});
 
-	  document.getElementById('virus-btn').addEventListener('click', () => {
-		navigate(`/stadium`)
-      });
+	document.getElementById("video-btn").addEventListener("click", () => {
+		toggleStyle("container-video", "form", "ribbon", "form");
+	});
 
+	const placeholder = "doll.jpeg";
+	document.addEventListener("DOMContentLoaded", () => {
+		const gifImage = document.getElementById("gif");
+		const playGifBtn = document.getElementById("gif-btn");
 
+		if (gifImage) {
+			playGifBtn.addEventListener("click", () => {
+				gifImage.src = `${placeholder}`;
+				setTimeout(() => {
+					toggleStyle("ribbon", "form", "virus", "form");
+					soundTrack.pause()
+					jumpScare.play()
+				}, 4000);
+			});
+		}
+	});
 
+	document.getElementById("virus-btn").addEventListener("click", () => {
+		navigate(`/stadium`);
+	});
 </script>
 
 <style>
@@ -120,41 +154,40 @@ const virusGif = "virus.gif"
 		justify-content: center;
 		color: azure;
 	}
-	.form{
+	.form {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		height: 100%;
 		justify-content: space-evenly;
 	}
-	.form-title{
-		color:azure;
+	.form-title {
+		color: azure;
 		font-size: 28px;
-		font-family:fantasy;
+		font-family: fantasy;
 	}
-	.form-input{
+	.form-input {
 		width: 250px;
 		height: 25px;
 	}
-	.form-button{
+	.form-button {
 		width: 100px;
 		font-family: fantasy;
 	}
-	.hiden{
-		display: none; 
+	.hiden {
+		display: none;
 	}
-	.drag-drog{
+	.drag-drog {
 		display: flex;
 		height: 300px;
 		flex-direction: column;
 		align-items: center;
 		justify-content: space-evenly;
-		
 	}
-	.video{
+	.video {
 		width: 800px;
 	}
-	.button{
+	.button {
 		width: 200px;
 		height: 50px;
 		border-radius: 5%;
@@ -163,11 +196,12 @@ const virusGif = "virus.gif"
 		font-family: fantasy;
 		font-size: 20px;
 	}
-	.title-ribbon{
+	.title-ribbon {
 		font-size: 25px;
 	}
-	p{
+	p {
+		font-family: 'Orbitron', sans-serif;
 		color: aliceblue;
-		width: 80%x;
+		width: 80%;
 	}
 </style>
