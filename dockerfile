@@ -3,7 +3,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN echo $PUBLIC_CLOUDINARY_CLOUD_NAME
 RUN npm install
 RUN npm run build
 
