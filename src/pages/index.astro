@@ -3,18 +3,25 @@ import Layout from "../layouts/Layout.astro";
 import DradAndDrop from "../components/DradAndDrop.astro";
 import DradAndDrop2 from "../components/DradAndDrop2.astro";
 
-const videoSrc = "https://res.cloudinary.com/drjuowzv7/video/upload/v1729633410/contract_ececra.mp4";
+const videoSrc =
+	"https://res.cloudinary.com/drjuowzv7/video/upload/v1729633410/contract_ececra.mp4";
 const realGif = "doll.webp";
 const virusGif = "virus.gif";
 ---
 
 <Layout title="🔥 Correo del infierno. 🔥">
 	<main>
-		<link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
-		<audio id="soundtrack" src="soundtrack.ogg" preload="auto" loop> </audio>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap"
+			rel="stylesheet"
+		/>
+		<audio id="soundtrack" src="soundtrack.ogg" preload="auto" loop>
+		</audio>
 		<div>
-			<span id='text-sound' class="text-sound">Para una mejor experiencia activa el sonido</span>
-			<span id='sound-btn' class="sound-btn">Activar sonido</span>
+			<span id="text-sound" class="text-sound"
+				>Para una mejor experiencia activa el sonido</span
+			>
+			<span id="sound-btn" class="sound-btn">Activar sonido</span>
 		</div>
 		<div class="form fomr-size" id="form">
 			<span class="form-title"> Nos vengaremos por ti. </span>
@@ -23,47 +30,47 @@ const virusGif = "virus.gif";
 				class="form-input"
 				placeholder="Nombre de la persona que deseas matar."
 			/>
-			<button class="form-button" id="form-button">Enviar</button>
+			<button class="form-button" id="form-button" disabled>Enviar</button>
 		</div>
-		<div class="hiden" id="victim">
+		<div class="hidden" id="victim">
 			<span class="form-title">
 				Por favor, suba una imagen de la persona que se quiere vengar.
 			</span>
 			<DradAndDrop
 				buttonLabel="Subir"
 				toggleStyle={{
-					hidenElement: "victim",
+					hiddenElement: "victim",
 					removeClass: "drag-drog",
 					displayElement: "user",
 					addClass: "drag-drog",
 				}}
 			/>
 		</div>
-		<div class="hiden" id="user">
+		<div class="hidden" id="user">
 			<span class="form-title"> Por favor, suba una imagen suya. </span>
 			<DradAndDrop2
 				buttonLabel="Subir"
 				toggleStyle={{
-					hidenElement: "user",
+					hiddenElement: "user",
 					removeClass: "drag-drog",
 					displayElement: "container-video",
 					addClass: "form",
 				}}
 			/>
 		</div>
-		<div id="container-video" class="hiden">
+		<div id="container-video" class="hidden">
 			<video id="video" width="100%" controls>
 				<source src={videoSrc} type="video/mp4" />
 				Tu navegador no soporta la reproducción de video.
 			</video>
 			<button class="button" id="video-btn">Siguiente</button>
 		</div>
-		<div id="ribbon" class="hiden">
+		<div id="ribbon" class="hidden">
 			<span class="title-ribbon">¿Quieres desatar el hilo? </span>
 			<img id="gif" src={realGif} alt="GIF" width="500" />
 			<button class="button" id="gif-btn">Desatar</button>
 		</div>
-		<div id="virus" class="hiden">
+		<div id="virus" class="hidden">
 			<img id="gif" src={virusGif} alt="GIF" width="500" />
 			<audio id="jumpscare" src="jumpscare.ogg" preload="auto"> </audio>
 			<p>
@@ -80,59 +87,65 @@ const virusGif = "virus.gif";
 </Layout>
 
 <script>
-import { navigate } from "astro:transitions/client";
+	import { navigate } from "astro:transitions/client";
 
 	const jumpScare = document.getElementById("jumpscare");
 	const soundTrack = document.getElementById("soundtrack");
 	const soundBtn = document.getElementById("sound-btn");
 	const textBtn = document.getElementById("text-sound");
+	const inputVictim = document.getElementById('input');
+	const buttonInput = document.getElementById('form-button');
 
 	const toggleStyle = (
-		hidenElement,
-		hidenClass,
+		hiddenElement,
+		hiddenClass,
 		displayElement,
 		displayClass,
 	) => {
-		const toHiden = document.getElementById(hidenElement);
+		const tohidden = document.getElementById(hiddenElement);
 		const toDisplay = document.getElementById(displayElement);
-		toHiden.classList.replace(hidenClass, "hiden");
-		toDisplay.classList.replace("hiden", displayClass);
+		tohidden.classList.replace(hiddenClass, "hidden");
+		toDisplay.classList.replace("hidden", displayClass);
 	};
 	// (()=>{
 	// 	soundTrack.play()
 	// })();
-
+	
 	document.getElementById("sound-btn").addEventListener("click", () => {
 		textBtn.classList.toggle("notext");
-		console.log(soundBtn.textContent)
-		if(soundBtn.textContent==="Activar sonido"){
-			soundBtn.textContent="De sactivar sonido"
-			soundTrack.play()
-		} else{
-			soundBtn.textContent="Activar sonido"
-			soundTrack.pause()
+		console.log(soundBtn.textContent);
+		if (soundBtn.textContent === "Activar sonido") {
+			soundBtn.textContent = "De sactivar sonido";
+			soundTrack.play();
+		} else {
+			soundBtn.textContent = "Activar sonido";
+			soundTrack.pause();
 		}
-		
+	});
+	inputVictim.addEventListener("input", function () {
+		if (inputVictim.value.trim() !== "") {
+			buttonInput.disabled = false; 
+		} else {
+			buttonInput.disabled = true;
+		}
 	});
 
 	document.getElementById("form-button").addEventListener("click", () => {
 		const inputName = document.getElementById("input").value;
 		localStorage.setItem("victimName", inputName);
 		toggleStyle("form", "form", "victim", "drag-drog");
-
 	});
 
 	document.addEventListener("DOMContentLoaded", () => {
 		const video = document.getElementById("video");
 		if (video) {
-
 			video.addEventListener("play", () => {
-				soundTrack.pause()
-			})
+				soundTrack.pause();
+			});
 
 			video.addEventListener("ended", () => {
 				toggleStyle("container-video", "form", "ribbon", "form");
-				soundTrack.play()
+				soundTrack.play();
 			});
 		}
 	});
@@ -151,8 +164,8 @@ import { navigate } from "astro:transitions/client";
 				gifImage.src = `${placeholder}`;
 				setTimeout(() => {
 					toggleStyle("ribbon", "form", "virus", "form");
-					soundTrack.pause()
-					jumpScare.play()
+					soundTrack.pause();
+					jumpScare.play();
 				}, 4000);
 			});
 		}
@@ -181,7 +194,7 @@ import { navigate } from "astro:transitions/client";
 		height: 100%;
 		justify-content: space-evenly;
 	}
-	.fomr-size{
+	.fomr-size {
 		height: 65%;
 	}
 	.form-title {
@@ -198,7 +211,7 @@ import { navigate } from "astro:transitions/client";
 		font-family: fantasy;
 		cursor: pointer;
 	}
-	.hiden {
+	.hidden {
 		display: none;
 	}
 	.drag-drog {
@@ -224,28 +237,28 @@ import { navigate } from "astro:transitions/client";
 	.title-ribbon {
 		font-size: 25px;
 	}
-	.text-sound{
+	.text-sound {
 		color: aliceblue;
 		font-size: 10px;
 		font-weight: bold;
 	}
-	.sound-btn{
+	.sound-btn {
 		cursor: pointer;
 		color: aliceblue;
 		font-size: 10px;
 		font-weight: bold;
-		text-shadow: 
-                0 0 5px #ffcc00, 
-                0 0 10px #ffcc00, 
-                0 0 15px #ff6600, 
-                0 0 20px #ff6600, 
-                0 0 25px #ff3300; 
+		text-shadow:
+			0 0 5px #ffcc00,
+			0 0 10px #ffcc00,
+			0 0 15px #ff6600,
+			0 0 20px #ff6600,
+			0 0 25px #ff3300;
 	}
-	.notext{
+	.notext {
 		opacity: 0;
 	}
 	p {
-		font-family: 'Orbitron', sans-serif;
+		font-family: "Orbitron", sans-serif;
 		color: aliceblue;
 		width: 80%;
 	}

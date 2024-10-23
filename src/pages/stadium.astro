@@ -244,6 +244,9 @@ import Layout from "../layouts/Layout.astro";
     ];
   }
 
+
+
+  
   /////////////////////////////////////////////
   // UTILITY
   /////////////////////////////////////////////
@@ -539,18 +542,21 @@ import Layout from "../layouts/Layout.astro";
 
       if (gameData.enemy.hp.current <= 0) {
         // Enemy is dead
-
+        
         clearModal();
         $(".modal-in header").append(
-          `<h1 Class="modal-text">${victimName} esta en el infierno</h1><span id="close2" class="close">x</span>`,
+          `<h1 class="modal-text">${victimName} esta en el infierno</h1><span id="close2" class="close">x</span>`,
         );
         $(".modal-in section").append(
-          `<img Class="modal-img" src=${edictVictim}/>`,
+          `<img id="hell-img" src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif"/>`,
         );
         $(".modal-out").slideDown("400");
         modalControls();
-
+        const hellImg = document.getElementById('hell-img')
+        hellImg.src=edictVictim
+        hellImg.classList.add('modal-img')
         gameData.enemy.hp.current = 0;
+        
         // clear the stadium of the dead
         $(".enemy").empty();
         // show the available characters
@@ -641,19 +647,21 @@ import Layout from "../layouts/Layout.astro";
 
     if (gameData.hero.hp.current <= 0) {
       // ding dong the hero's dead
-
+      
       clearModal();
       $(".modal-in header").append(
-        '<h1 Class="modal-text">Tu alma estara en el infierno</h1><span id="close" class="close">x</span>',
+        '<h1 class="modal-text">Tu alma estara en el infierno</h1><span id="close" class="close">x</span>',
       );
       $(".modal-in section").append(
-        `<img Class="modal-img" src=${edictUser}/>`,
+        `<img id="hell-img"src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif"/>`,
       );
       $(".modal-out").slideDown("400");
       modalControls();
 
       gameData.hero.hp.current = 0;
-
+      const hellImg = document.getElementById('hell-img')
+      hellImg.src=edictUser
+      hellImg.classList.add('modal-img')
       resetGame();
     } else {
       // the hero lives
@@ -930,9 +938,6 @@ import Layout from "../layouts/Layout.astro";
     }
   }
 
-  .modal-text{
-    color: azure;
-  }
   .modal-out {
     display: none;
     position: fixed;
@@ -952,6 +957,7 @@ import Layout from "../layouts/Layout.astro";
       height: 70vh;
       margin: 0 auto;
       background: black;
+      color: aliceblue;
 
       header {
         position: relative;
@@ -972,6 +978,7 @@ import Layout from "../layouts/Layout.astro";
       .modal-img {
         width: 80%;
         height: 250px;
+        object-fit: contain;
       }
 
       section {

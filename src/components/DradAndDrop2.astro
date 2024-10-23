@@ -5,7 +5,7 @@ const PRESET = import.meta.env.UPLOADPRESET;
 interface Props {
   buttonLabel: string;
   toggleStyle: {
-    hidenElement: string;
+    hiddenElement: string;
     removeClass: string;
     displayElement: string;
     addClass: string;
@@ -74,10 +74,10 @@ const toggleStyleString = JSON.stringify(toggleStyle);
     widget.addEventListener("clduploadwidget:success", ((
       e: CustomEvent<{ info: { public_id: string } }>,
     ) => {
-      const toHiden = document.getElementById(temporal["hidenElement"]);
-      toHiden.classList.replace(temporal["removeClass"], "hiden");
+      const toHiden = document.getElementById(temporal["hiddenElement"]);
+      toHiden.classList.replace(temporal["removeClass"], "hidden");
       const toShow = document.getElementById(temporal["displayElement"]);
-      toShow.classList.replace("hiden", temporal["addClass"]);
+      toShow.classList.replace("hidden", temporal["addClass"]);
 
       const publicId = e.detail.info.public_id;
 
